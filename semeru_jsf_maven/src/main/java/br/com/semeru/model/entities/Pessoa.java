@@ -2,13 +2,14 @@ package br.com.semeru.model.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javassist.SerialVersionUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name="pessoa")
@@ -40,7 +41,12 @@ public class Pessoa implements Serializable{
     @Column(name="DataDeCadastro",nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataDeCadastro;
-
+    
+    @ManyToOne
+    @ForeignKey(name="PessoaSexo")
+    private Pessoa pessoa;
+    
+    
     //CONSTRUTOR
     public Pessoa() {
         
