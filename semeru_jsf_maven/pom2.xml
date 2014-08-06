@@ -18,7 +18,7 @@
         <groovy-all.version>1.7.5</groovy-all.version>
         <hibernate.version>4.0.1.Final</hibernate.version>
         <slf4j.version>1.6.4</slf4j.version>
-        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>   
+        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server> 
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -115,22 +115,28 @@
             <url>http://maven.springframework.org/milestone</url>
         </repository>
        
-        <!-- REPOSITÓRIO DA AOP ALLIANCE -->
+        <!-- REPOSITÃ“RIO DA AOP ALLIANCE -->
         <repository>
             <id>spring-ext</id>
             <name>Spring External Dependencies Repository</name>
             <url>https://svn.sourceforge.net/svnroot/springframework/repos/repo-ext/</url>
         </repository>       
         
-        <!-- REPOSITÓRIO DO JASPER REPORTS -->        
+        <!-- REPOSITÃ“RIO DO JASPER REPORTS -->        
         <repository>
             <id>jasperreports</id>
             <url>http://repo1.maven.org/maven2/</url>
         </repository>  
 
     </repositories>
-
+    
     <dependencies>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
+            <version>3.2.6.ga</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -138,7 +144,10 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- || DEPENDÊNCIAS DO JAVA SERVER FACES || -->                        
+        
+        
+        
+        <!-- || DEPENDÃŠNCIAS DO JAVA SERVER FACES || -->                        
         <!-- ############## JSF-API ################ -->
         <dependency>
             <groupId>com.sun.faces</groupId>
@@ -175,7 +184,7 @@
             <version>2.1</version>
         </dependency>
         
-        <!-- ##### DEPENDÊNCIAS DO PRIMEFACES ##### -->
+        <!-- ##### DEPENDÃŠNCIAS DO PRIMEFACES ##### -->
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
@@ -238,7 +247,7 @@
             <version>${slf4j.version}</version>
         </dependency>
 
-        <!-- |||||| DEPENDÊNCIAS DO HIBERNATE |||||| -->
+        <!-- |||||| DEPENDÃŠNCIAS DO HIBERNATE |||||| -->
 
         <!-- ########### HIBERNATE-C3P0 ############ -->
         <dependency>
@@ -259,7 +268,8 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>            
+            <version>4.0.1.Final</version>
+            <type>jar</type>
         </dependency>
 
         <!-- ########### HIBERNATE ANTLR ########### -->
@@ -354,21 +364,21 @@
             <version>2.4.3</version>
         </dependency>            
 
-        <!-- || DEPENDÊNCIAS DO JAVAX-PERSISTENCE || -->
+        <!-- || DEPENDÃŠNCIAS DO JAVAX-PERSISTENCE || -->
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
             <version>1.0.2</version>
         </dependency>
         
-        <!-- |||| DEPENDÊNCIAS DO MYSQL DRIVER  |||| -->        
+        <!-- |||| DEPENDÃŠNCIAS DO MYSQL DRIVER  |||| -->        
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
         </dependency> 
         
-        <!-- |||| DEPENDÊNCIAS DO SPRING-SECURITY || -->  
+        <!-- |||| DEPENDÃŠNCIAS DO SPRING-SECURITY || -->  
                                                  
         <!-- ### FACELETS-TAGLIB-JSF2.0-SPRING-3 ### -->
         <dependency>
@@ -421,7 +431,7 @@
             <version>3.0.5.RELEASE</version>
         </dependency>
 
-        <!-- ||| DEPENDÊNCIAS DO SPRING FRAMEWORK |||-->          
+        <!-- ||| DEPENDÃŠNCIAS DO SPRING FRAMEWORK |||-->          
         <!-- ############# SPRING-ASM ############## -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -501,7 +511,7 @@
             <version>1.0.0</version>
         </dependency> 
         
-        <!-- ||||||| DEPENDÊNCIAS DO J-UNIT |||||||| -->        
+        <!-- ||||||| DEPENDÃŠNCIAS DO J-UNIT |||||||| -->        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -516,28 +526,49 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <compilerArguments>
+                        <endorseddirs>${endorsed.dir}</endorseddirs>
+                    </compilerArguments>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${endorsed.dir}</outputDirectory>
+                            <silent>true</silent>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>javax</groupId>
+                                    <artifactId>javaee-endorsed-api</artifactId>
+                                    <version>6.0</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-        </plugins>         
+        </plugins>
     </build>
-       
 
 </project>
