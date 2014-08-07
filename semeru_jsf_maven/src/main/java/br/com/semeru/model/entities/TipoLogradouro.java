@@ -29,7 +29,7 @@ public class TipoLogradouro implements Serializable {
     
     //RELACIONAMENTO COM A ENTIDADE ENDERECO
     @OneToMany(mappedBy = "tipoendereco", fetch=FetchType.LAZY)
-    @ForeignKey(name="Endereco_TipoEndereco")
+    @ForeignKey(name="EnderecoTipoLogradouro")
     private List<Endereco> enderecos;
     
     //CONSTRUTOR

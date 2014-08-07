@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.ForeignKey;
@@ -15,8 +18,10 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name="pessoa")
 public class Pessoa implements Serializable{
     
+    //SERIALIZABLE
     private static final long SerialVersionUID = 1L;
     
+    //ATRIBUTOS
     @Id
     @GeneratedValue
     @Column(name="IdPessoa", nullable=false)
@@ -42,9 +47,15 @@ public class Pessoa implements Serializable{
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataDeCadastro;
     
+    //RELACIONAMENTOS
+    @OneToOne(mappedBy = "pessoa", fetch = FetchType.LAZY)
+    @ForeignKey(name="EnderecoPessoa")
+    private Endereco endereco;
+    
     @ManyToOne
     @ForeignKey(name="PessoaSexo")
-    private Pessoa pessoa;
+    @JoinColumn(name="IdSexo", referencedColumnName="IdSexo")
+    private Sexo sexo;
     
     
     //CONSTRUTOR
@@ -108,6 +119,23 @@ public class Pessoa implements Serializable{
     public void setDataDeCadastro(Date dataDeCadastro) {
         this.dataDeCadastro = dataDeCadastro;
     }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+    
     
     //EQUALS AND HASHCODE
     @Override
