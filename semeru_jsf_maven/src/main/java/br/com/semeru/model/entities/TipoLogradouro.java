@@ -15,35 +15,20 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name="tipologradouro")
 public class TipoLogradouro implements Serializable {
     
-    //SERIALIZABLE
     private static final long serialVersionUID = 1L;
     
-    //ATRIBUTOS
     @Id
     @GeneratedValue
-    @Column(name="IdTipoLogradouro", nullable=false)
+    @Column(name = "IdTipoLogradouro", nullable = false)
     private Integer idTipoLogradouro;
-    
-    @Column(name="DescricaoTipoLogradouro", nullable=false, length=35)
+    @Column(name = "DescricaoTipoLogradouro", nullable = false, length = 40)
     private String descricaoTipoLogradouro;
     
-    //RELACIONAMENTO COM A ENTIDADE ENDERECO
-    @OneToMany(mappedBy = "tipoendereco", fetch=FetchType.LAZY)
-    @ForeignKey(name="EnderecoTipoLogradouro")
+    @OneToMany(mappedBy = "tipologradouro", fetch = FetchType.LAZY)
+    @ForeignKey(name = "EnderecoTipoLogradouro")
     private List<Endereco> enderecos;
-    
-    //CONSTRUTOR
-    public TipoLogradouro() {    
-        
-    }
 
-    //GETTERS AND SETTERS
-    public Integer getIdTipoLogradouro() {
-        return idTipoLogradouro;
-    }
-
-    public void setIdTipoLogradouro(Integer idTipoLogradouro) {
-        this.idTipoLogradouro = idTipoLogradouro;
+    public TipoLogradouro() {
     }
 
     public String getDescricaoTipoLogradouro() {
@@ -61,13 +46,13 @@ public class TipoLogradouro implements Serializable {
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
-    
-    //EQUALS AND HASHCODE
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + (this.idTipoLogradouro != null ? this.idTipoLogradouro.hashCode() : 0);
-        return hash;
+
+    public Integer getIdTipoLogradouro() {
+        return idTipoLogradouro;
+    }
+
+    public void setIdTipoLogradouro(Integer idTipoLogradouro) {
+        this.idTipoLogradouro = idTipoLogradouro;
     }
 
     @Override
@@ -84,5 +69,11 @@ public class TipoLogradouro implements Serializable {
         }
         return true;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + (this.idTipoLogradouro != null ? this.idTipoLogradouro.hashCode() : 0);
+        return hash;
+    }
 }

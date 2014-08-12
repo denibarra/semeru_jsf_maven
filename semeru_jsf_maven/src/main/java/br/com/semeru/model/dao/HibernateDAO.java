@@ -29,6 +29,11 @@ public class HibernateDAO<T> implements InterfaceDAO<T>, Serializable {
     public void update(T entity) {
         session.update(entity);
     }
+    
+    @Override
+    public void remove(T entity) {
+        session.delete(entity);
+    }
 
     @Override
     public void merge(T entity) {

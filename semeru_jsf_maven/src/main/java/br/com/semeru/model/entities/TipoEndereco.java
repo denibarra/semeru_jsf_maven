@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -27,8 +28,8 @@ public class TipoEndereco implements Serializable{
     private String descricaoTipoEndereco;
     
     //RELACIONAMENTO COM A ENTIDADE ENDERECO
-    @OneToMany
-    @ForeignKey(name="Endereco_TipoEndereco")
+    @OneToMany(mappedBy = "tipoendereco", fetch = FetchType.LAZY)
+    @ForeignKey(name="EnderecoTipoEndereco")
     private List<Endereco> enderecos;
     
     //CONSTRUTOR
